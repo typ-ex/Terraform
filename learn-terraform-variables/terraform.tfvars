@@ -1,7 +1,7 @@
 resource_tags = {
-  project = "new-project",
+  project     = "new-project",
   environment = "test",
-  owner = "me@example.com"
+  owner       = "me@example.com"
 }
 
 ec2_instance_type = "t2.nano"
