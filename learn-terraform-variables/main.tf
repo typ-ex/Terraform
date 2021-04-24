@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region  = var.aws_region
 }
 
 data "aws_availability_zones" "available" {
