@@ -1,3 +1,0 @@
-[submodule "learn-terraform-resources"]
-	path = learn-terraform-resources
-	url = https://github.com/hashicorp/learn-terraform-resources
