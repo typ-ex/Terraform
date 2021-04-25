@@ -1,3 +1,7 @@
+locals {
+  name_suffix = "${var.resource_tags["project"]}-${var.resource_tags["environment"]}"
+}
+
 terraform {
   required_providers {
     aws = {
