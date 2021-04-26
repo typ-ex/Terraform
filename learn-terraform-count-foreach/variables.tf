@@ -88,6 +88,6 @@ variable "private_subnet_cidr_blocks" {
 
 variable "instances_per_subnet" {
   description = "Number of EC2 instances in each private subnet"
-  type = number
-  default = 2
+  type        = number
+  default     = 2
 }
