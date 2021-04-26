@@ -34,6 +34,8 @@ module "app_security_group" {
   source  = "terraform-aws-modules/security-group/aws//modules/web"
   version = "3.17.0"
 
+  for_each = var.project
+
   name        = "web-server-sg-${each.key}-${each.value.environment}"
   description = "Security group for web-servers with HTTP ports open within VPC"
   vpc_id      = module.vpc[each.key].vpc_id
@@ -47,7 +49,7 @@ module "lb_security_group" {
 
   for_each = var.project
 
-  name = "load-balancer-sg-${var.each.key}-${each.valueenvironment}"
+  name = "load-balancer-sg-${each.key}-${each.value.environment}"
 
   description = "Security group for load balancer with HTTP ports open within VPC"
   vpc_id      = module.vpc[each.key].vpc_id
@@ -93,15 +95,26 @@ module "elb_http" {
   }
 }
 
-module "ec2_instances" {
-  source = "./modules/aws_instance"
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
 
-  for_each = var.project
-  instance_count = each.value.instances_per_subnet * length(module.vpc[each.key].private_subnets)
-  instance_type = each.value.instance_type
-  subnet_ids = module.vpc[each.key].private_subnets[*]
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+module "ec2_instances" {
+  source = "./modules/aws-instance"
+
+  for_each           = var.project
+
+  instance_count     = each.value.instances_per_subnet * length(module.vpc[each.key].private_subnets)
+  instance_type      = each.value.instance_type
+  subnet_ids         = module.vpc[each.key].private_subnets[*]
   security_group_ids = [module.app_security_group[each.key].this_security_group_id]
 
   project_name = each.key
-  environment = each.value.environment
+  environment  = each.value.environment
 }
