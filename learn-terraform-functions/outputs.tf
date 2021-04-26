@@ -13,7 +13,3 @@ output "ami_value" {
 output "web_security_group_ids" {
   value = concat([aws_security_group.sg_22.id, aws_security_group.sg_8080.id])
 }
-
-output "web_security_group_ids" {
-  value = concat([aws_security_group.sg_22.id, aws_security_group.sg_8080.id])
-}
