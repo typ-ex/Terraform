@@ -76,3 +76,24 @@ variable "private_subnet_cidr_blocks" {
     "10.0.116.0/24"
   ]
 }
+
+variable "project" {
+  description = "Map of project names to configuration."
+  type = map
+  default = {
+    client-webapp = {
+      public_subnets_per_vpc = 2,
+      private_subnets_per_vpc = 2,
+      instances_per_subnet = 2,
+      instance_type = "t2.micro",
+      environment = "dev"
+    },
+    internal-webapp = {
+      public_subnets_per_vpc = 1,
+      private_subnets_per_vpc = 1,
+      instances_per_subnet = 2,
+      instance_type = "t2.nano",
+      environment = test
+    }
+  }
+}
