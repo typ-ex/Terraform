@@ -27,13 +27,3 @@ variable "user_department" {
   description = "The organization the user belongs to: dev, prod, qa"
   default     = "learn"
 }
-
-variable "user_name" {
-  description = "The user creating ths infrastructure"
-  default = "terraform"
-}
-
-variable "user_department" {
-  description = "The organization the user belongs to: dev, prod, qa"
-  default = "learn"
-}
