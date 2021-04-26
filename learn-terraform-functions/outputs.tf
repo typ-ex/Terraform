@@ -6,6 +6,6 @@ output "web_public_ip" {
   value = aws_instance.web.public_ip
 }
 
-output " ami_value" {
+output "ami_value" {
   value = lookup(var.aws_amis, var.aws_region)
 }
