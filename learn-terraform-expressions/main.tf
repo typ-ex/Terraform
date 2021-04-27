@@ -1,9 +1,9 @@
 locals {
-  name = var.name
+  name  = var.name
   owner = var.team
-  common_tags {
+  common_tags = {
     Owner = local.owner
-    Name = local.name
+    Name  = local.name
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_vpc" "my_vpc" {
   cidr_block           = var.cidr_vpc
   enable_dns_support   = true
   enable_dns_hostnames = true
-  tags = local.common_tags
+  tags                 = local.common_tags
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_subnet" "subnet_public" {
   vpc_id     = aws_vpc.my_vpc.id
   cidr_block = var.cidr_subnet
-  tags = local.common_tags
+  tags       = local.common_tags
 }
 
 resource "aws_route_table" "rtb_public" {
@@ -85,7 +85,7 @@ resource "aws_elb" "learn" {
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
-  tags = local.common_tags
+  tags                        = local.common_tags
 }
 
 
