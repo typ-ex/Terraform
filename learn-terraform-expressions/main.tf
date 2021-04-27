@@ -1,5 +1,9 @@
+resource "random_id" "id" {
+  byte_length = 8
+}
+
 locals {
-  name  = var.name
+  name  = (var.name != "" ? var.name : random_id.id.hex)
   owner = var.team
   common_tags = {
     Owner = local.owner
@@ -81,7 +85,7 @@ resource "aws_elb" "learn" {
     interval            = 30
   }
 
-  instances                   = [aws_instance.ubuntu.id]
+  instances                   = aws_instance.ubuntu[*].id
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
@@ -90,8 +94,10 @@ resource "aws_elb" "learn" {
 
 
 resource "aws_instance" "ubuntu" {
+  count                       = (var.high_availability == true ? 3 : 1)
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
-  associate_public_ip_address = true
+  associate_public_ip_address = (count.index == 0 ? true : false)
   subnet_id                   = aws_subnet.subnet_public.id
+  tags                        = merge(local.common_tags)
 }
