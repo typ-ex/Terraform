@@ -43,7 +43,7 @@ resource "aws_instance" "web_app" {
               nohup busybox httpd -f -p 8080 &
               EOF
  tags = {
-    Name = $var.name-learn
+    Name = "${var.name}-learn"
   }
 }
 
