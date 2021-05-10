@@ -1,3 +1,4 @@
+resource "docker_container" "web" { }
 ## Replace this file with your configuration from following the scenario.
 ##
 ## Final configuration:
@@ -17,5 +18,3 @@
 #     internal = 80
 #   }
 # }
-
-resource "docker_container" "web" {}
