@@ -41,6 +41,9 @@ resource "aws_instance" "example" {
     Name          = "terraform-learn-state-ec2"
     drift_example = "v1"
   }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_security_group" "sg_web" {
