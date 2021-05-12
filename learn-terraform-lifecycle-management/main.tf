@@ -35,22 +35,22 @@ resource "aws_instance" "example" {
   user_data              = <<-EOF
               #!/bin/bash
               echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
+              nohup busybox httpd -f -p 80 &
               EOF
   tags = {
     Name          = "terraform-learn-state-ec2"
     drift_example = "v1"
   }
   lifecycle {
-    prevent_destroy = true
+    create_before_destroy = true
   }
 }
 
 resource "aws_security_group" "sg_web" {
   name = "sg_web"
   ingress {
-    from_port   = "8080"
-    to_port     = "8080"
+    from_port   = "80"
+    to_port     = "80"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
